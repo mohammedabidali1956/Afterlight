@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17251f">
+  <meta name="description" content="A small light for the stories we keep. An open-model, local-first family memory archive.">
+  <title>Afterlight — a small light for the stories we keep</title>
+  <link rel="icon" href="/afterlight.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#archive" data-nav="archive" aria-label="Afterlight home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 38 38" fill="none"><path d="M19 4.5c3.4 4.2 4.9 7.6 4.9 11.1 0 2.7-1.4 4.6-3.2 5.5 4.7-.8 8.1-4.8 7.1-9.2 4 4.2 5.9 8.1 5.9 12.2 0 7.2-5.8 12.4-14.2 12.4S5.4 31.3 5.4 24c0-4.2 2.3-8.8 6.1-12.3-.4 4.7 1.2 7.7 4.8 9.1-1.2-5 .4-10.4 2.7-16.3Z" fill="currentColor"/><path d="M19.2 23.8c2.8 2.6 3.4 4.5 3.4 6.1 0 2.4-1.6 4-3.8 4s-3.8-1.6-3.8-4c0-1.8 1.3-4.1 4.2-6.1Z" fill="#F2C985"/></svg>
+        </span>
+        <span class="brand-word">afterlight<span class="brand-period">.</span><small>THE MEMORY ATLAS</small></span>
+      </a>
+
+      <div class="side-rule"></div>
+      <p class="side-eyebrow">YOUR QUIET PLACE</p>
+      <nav class="side-nav">
+        <button class="nav-link active" data-nav="archive"><span class="nav-icon">◫</span><span>The archive</span><span class="nav-count" id="side-count">07</span></button>
+        <button class="nav-link" data-nav="ask"><span class="nav-icon nav-spark">✳</span><span>Ask the archive</span></button>
+        <button class="nav-link" data-nav="connections"><span class="nav-icon">⌘</span><span>Threads we keep</span></button>
+      </nav>
+
+      <div class="side-people-head"><p class="side-eyebrow">IN THIS LIGHT</p><span id="people-count">03</span></div>
+      <div class="people-list" id="people-list"></div>
+
+      <div class="sidebar-spacer"></div>
+      <div class="side-privacy">
+        <span class="privacy-orbit"><span></span></span>
+        <div><strong>Only here, on this device</strong><small>Your stories don't leave this room.</small></div>
+      </div>
+      <button class="nav-link settings-link" data-nav="about"><span class="nav-icon">⚙</span><span>How it works</span></button>
+      <div class="sidebar-foot"><span class="mini-candle">✳</span> MADE TO REMEMBER, NOT RECREATE</div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="crumb"><span>THE MORALES FAMILY</span><span class="crumb-slash">/</span><strong id="view-crumb">THE ARCHIVE</strong></div>
+        <div class="top-actions">
+          <div class="model-pill" id="model-pill" title="Local AI status">
+            <span class="model-dot"></span><span id="model-label">Checking local model…</span>
+          </div>
+          <button class="icon-button" id="export-button" title="Export a portable JSON backup" aria-label="Export archive">↓<span class="button-word">Export</span></button>
+          <button class="button button-dark button-add" id="add-memory-button"><span>＋</span> <span class="button-word">Keep a memory</span></button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <div class="demo-banner" id="demo-banner"><span class="demo-flower">✿</span><span><strong>Fictional starter stories</strong> — made for trying the archive. No real family memories are included.</span><button id="demo-banner-dismiss" aria-label="Dismiss demo notice">×</button></div>
+
+        <section class="view active" id="archive-view" aria-labelledby="archive-heading">
+          <div class="page-intro">
+            <div><p class="eyebrow"><span class="eyebrow-line"></span> MONDAY, NOVEMBER 2 <span class="eyebrow-sep">·</span> A DAY FOR REMEMBERING</p>
+              <h1 id="archive-heading">A little light,<br><em>kept close.</em></h1>
+              <p class="intro-copy">The ordinary things are often the ones that stay.<br>Here are a few of the ways Rosa is still with you.</p>
+            </div>
+            <div class="intro-side-note"><span class="mini-candle">✳</span><span>LEAVE A LITTLE<br>OF EVERYTHING<br>WE LOVE.</span><i>— Rosa</i></div>
+          </div>
+
+          <div class="archive-grid">
+            <article class="featured-memory" id="featured-memory"></article>
+            <aside class="ask-preview">
+              <div class="preview-head"><span class="small-icon">✳</span><span>THE LANTERN IS LISTENING</span><span class="local-only-tag">LOCAL</span></div>
+              <h2>What would you<br>like to remember?</h2>
+              <p>Ask a question. Afterlight will look only through the stories you have saved here.</p>
+              <button class="prompt-chip" data-prompt="What did Elena sing when the rain came?">“What did Elena sing when the rain came?” <span>↗</span></button>
+              <button class="prompt-chip" data-prompt="Which song brought everyone together?">“Which song brought everyone together?” <span>↗</span></button>
+              <button class="text-link" data-nav="ask">Ask your own question <span>→</span></button>
+              <div class="preview-foot"><span class="little-lock">⌑</span> The model is a guest in this room.<br><span class="preview-foot-indent">The stories belong to your family.</span></div>
+            </aside>
+          </div>
+
+          <div class="section-heading">
+            <div><p class="eyebrow">A FEW THINGS WE KEPT</p><h2>Small things, <em>bright enough.</em></h2></div>
+            <div class="heading-actions"><label class="search-box"><span>⌕</span><input id="memory-search" type="search" placeholder="Find a memory…" aria-label="Search memories"></label><span class="memory-total"><b id="memory-total">07</b> MEMORIES</span></div>
+          </div>
+          <div class="memory-grid" id="memory-grid"></div>
+
+          <div class="archive-bottom-row">
+            <div class="motif-panel"><div class="panel-topline"><span class="eyebrow">THREADS THAT RETURN</span><button class="text-link" data-nav="connections">See the atlas <span>→</span></button></div><div id="motif-cloud" class="motif-cloud"></div><p class="panel-caption">Little details, woven across different days.</p></div>
+            <div class="keep-note"><span class="note-ornament">✳</span><p>“The story does not end where the photograph does.”</p><span>FROM THE FAMILY NOTEBOOK <i>·</i> 2012</span></div>
+          </div>
+          <footer class="page-footer"><span>AFTERLIGHT <b>✳</b> A MEMORY ATLAS, HELD LOCALLY</span><button data-nav="about">How we keep it safe <span>↗</span></button></footer>
+        </section>
+
+        <section class="view" id="ask-view" aria-labelledby="ask-heading">
+          <div class="page-intro compact-intro">
+            <div><p class="eyebrow"><span class="eyebrow-line"></span> A GENTLE KIND OF SEARCH</p><h1 id="ask-heading">Ask what the<br><em>stories remember.</em></h1><p class="intro-copy">The local model can notice patterns. It cannot speak for anyone.<br>Every reflection comes with the original notes it drew from.</p></div>
+            <div class="intro-side-note"><span class="mini-candle">✳</span><span>THE ORIGINAL<br>STAYS UNTOUCHED.</span><i>Always.</i></div>
+          </div>
+          <div class="ask-layout">
+            <div class="ask-main-card">
+              <div class="ask-card-top"><span class="small-icon">✳</span><span>ASK THE ARCHIVE</span><span class="source-count"><i>●</i> <b id="ask-available-count">07</b> STORIES TO SEARCH</span></div>
+              <form id="ask-form"><label class="sr-only" for="ask-input">Your question</label><textarea id="ask-input" maxlength="500" placeholder="Ask about a sound, a meal, a place…" rows="3"></textarea><div class="ask-submit-row"><span class="ask-disclaimer">Only matching stories are sent to the model on this device.</span><button class="button button-dark" type="submit" id="ask-submit"><span>✳</span> Find a thread</button></div></form>
+              <div class="question-suggestions"><span>YOU COULD ASK</span><button data-prompt="What did Rosa bake before sunrise?">What did she bake?</button><button data-prompt="Which song brought everyone together?">Which song stayed?</button><button data-prompt="What small rituals made people feel welcome?">How did she welcome people?</button></div>
+            </div>
+            <div class="reflection-area" id="reflection-area" aria-live="polite"><div class="empty-reflection"><span class="empty-ornament">✳</span><h3>A question can be<br>another way of listening.</h3><p>When you ask, the matching source stories will be kept close to the answer.</p><span class="empty-rule"></span><small>NO VOICE CLONES. NO CLOUD CALLS. JUST THE STORIES HERE.</small></div></div>
+          </div>
+        </section>
+
+        <section class="view" id="connections-view" aria-labelledby="connections-heading">
+          <div class="page-intro compact-intro">
+            <div><p class="eyebrow"><span class="eyebrow-line"></span> THE MEMORY ATLAS</p><h1 id="connections-heading">Some things<br><em>find each other.</em></h1><p class="intro-copy">A blue ribbon, a rain song, a loaf left for a neighbor.<br>See the small details that travel between stories.</p></div>
+            <div class="intro-side-note"><span class="mini-candle">✳</span><span>EVERY THREAD<br>STARTS WITH<br>A HUMAN STORY.</span><i>— Afterlight</i></div>
+          </div>
+          <div class="atlas-overview"><div><span id="atlas-memory-count">07</span><small>MEMORIES</small></div><span class="atlas-divider">✳</span><div><span id="atlas-people-count">03</span><small>PEOPLE</small></div><span class="atlas-divider">✳</span><div><span id="atlas-motif-count">12</span><small>REPEATED DETAILS</small></div></div>
+          <div class="atlas-layout"><div class="atlas-map" id="atlas-map"><div class="atlas-map-top"><span class="eyebrow">A CONSTELLATION OF DETAILS</span><span class="map-key"><i></i> one story</span></div><svg class="constellation-lines" id="constellation-lines" aria-hidden="true"></svg><div class="constellation-nodes" id="constellation-nodes"></div><div class="map-footnote">Select a detail to find the stories it touched.</div></div><aside class="atlas-side"><p class="eyebrow">WHAT RETURNS MOST</p><div id="motif-list" class="motif-list"></div><div class="atlas-aside-note"><span>✳</span><p>These connections come from the tags and words your family saved. They are a map to explore, not a claim about what a person meant.</p></div></aside></div>
+        </section>
+
+        <section class="view" id="about-view" aria-labelledby="about-heading">
+          <div class="page-intro compact-intro">
+            <div><p class="eyebrow"><span class="eyebrow-line"></span> THE CARE BEHIND THE CANDLE</p><h1 id="about-heading">A guest in the room.<br><em>Never the keeper.</em></h1><p class="intro-copy">Afterlight keeps the people in its stories human — and keeps the AI in its place.</p></div>
+            <div class="intro-side-note"><span class="mini-candle">✳</span><span>THE STORIES<br>BELONG TO<br>YOUR FAMILY.</span><i>— Afterlight</i></div>
+          </div>
+          <div class="principles-grid">
+            <article class="principle-card"><span>01 <i>✳</i></span><h2>The original stays whole.</h2><p>Every note is kept as it was written. A reflection never replaces the words that started it.</p></article>
+            <article class="principle-card"><span>02 <i>✳</i></span><h2>A model is not a person.</h2><p>Afterlight will not impersonate someone who has died or invent what they might have said.</p></article>
+            <article class="principle-card"><span>03 <i>✳</i></span><h2>Your computer is the keeper.</h2><p>Stories live in a local SQLite file. An open model runs through Ollama on this same computer.</p></article>
+            <article class="principle-card"><span>04 <i>✳</i></span><h2>A family can take the key.</h2><p>Export an open JSON archive. Switch, replace, or remove the model without losing a story.</p></article>
+          </div>
+          <div class="model-settings-card"><div class="settings-illustration">✳</div><div class="settings-copy"><p class="eyebrow">YOUR LOCAL MODEL</p><h2>Choose who holds the lantern.</h2><p>Afterlight uses Ollama on this computer. No installed model? The archive remains usable; local reflections start when Ollama is ready.</p></div><div class="model-select-wrap"><label for="model-select">MODEL ON THIS DEVICE</label><select id="model-select" aria-label="Select local model"><option value="">Checking Ollama…</option></select><small id="model-help">No model selection leaves this computer.</small></div></div>
+          <div class="backup-tools"><div><p class="eyebrow">TAKE YOUR STORIES WITH YOU</p><strong>The archive is yours to carry.</strong><small>Import replaces this archive. Export a backup first.</small></div><button class="button backup-button" id="import-button">↑ Import a JSON archive</button><input id="import-file" type="file" accept="application/json,.json" hidden></div>
+          <div class="privacy-detail"><div><span class="eyebrow">THE SHORT VERSION</span><h2>Private by architecture,<br><em>not just a promise.</em></h2></div><ul><li><span>✳</span> The local server accepts connections from this computer only.</li><li><span>✳</span> No accounts, analytics, cloud database, or API keys.</li><li><span>✳</span> Stories are only sent to the selected local model when you ask a question.</li><li><span>✳</span> The database is not encrypted. Keep this device and its backups private.</li></ul></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="memory-dialog" id="memory-dialog" aria-labelledby="memory-dialog-title">
+    <form id="memory-form" method="dialog">
+      <div class="dialog-head"><span class="small-icon">✳</span><button class="dialog-close" type="button" id="close-memory-dialog" aria-label="Close">×</button></div>
+      <p class="eyebrow">ADD TO THE ARCHIVE</p><h2 id="memory-dialog-title">Keep a little<br><em>of the day.</em></h2>
+      <p class="dialog-copy">A first name and one vivid detail are enough. You can add the rest later.</p>
+      <div class="form-grid"><label>WHO IS THIS ABOUT?<input name="person" maxlength="80" required placeholder="e.g. Rosa Morales"></label><label>YOUR RELATIONSHIP<input name="relationship" maxlength="60" placeholder="e.g. Abuela"></label><label class="form-wide">A TITLE FOR THIS MEMORY<input name="title" maxlength="120" required placeholder="e.g. The radio that needed two taps"></label><label>WHEN?<input name="date" type="date"></label><label>WHERE?<input name="place" maxlength="100" placeholder="e.g. The back porch"></label><label class="form-wide">WHAT DO YOU WANT TO KEEP?<textarea name="body" rows="5" maxlength="8000" required placeholder="A sound, a gesture, something they always said…"></textarea></label><label class="form-wide">DETAILS THAT COME BACK<input name="tags" placeholder="Separate small details with commas"></label></div>
+      <div class="dialog-actions"><span>Stored on this device, in your archive.</span><button class="button button-dark" type="submit">Save this memory <span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog class="detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
