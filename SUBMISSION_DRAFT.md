@@ -52,7 +52,7 @@ The SQLite database is not encrypted, so this prototype is for a trusted persona
 
 The repository includes a fictional starter archive and works without a login. To run local inference, install Ollama and run `ollama pull gemma3:1b`, then start the project with `python main.py`. The full setup is in the README.
 
-**Source:** [Add public repository link before publishing]  
+**Source:** [https://github.com/mohammedabidali1956/Afterlight](https://github.com/mohammedabidali1956/Afterlight)  
 **Demo:** [Add a short screen recording or locally hosted demo link before publishing]
 
 ---
