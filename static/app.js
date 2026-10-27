@@ -85,7 +85,7 @@
   function memoryCard(memory, index) {
     const excerpt = memory.body.length > 103 ? `${memory.body.slice(0, 100).trimEnd()}…` : memory.body;
     const kind = memory.tags?.[0] || "A small detail";
-    return `<article class="memory-card memory-tone-${index % colors.length}" tabindex="0" role="button" aria-label="Open ${escapeHtml(memory.title)}" data-open-memory="${memory.id}">
+    return `<article class="memory-card" tabindex="0" role="button" aria-label="Open ${escapeHtml(memory.title)}" data-open-memory="${memory.id}">
       <div class="memory-card-top"><span>${escapeHtml(displayDate(memory.date, { month: "short", year: "numeric" }).toLocaleUpperCase())}</span><span class="memory-kind">${escapeHtml(kind.toLocaleUpperCase())}</span></div>
       <h3>${escapeHtml(memory.title)}</h3><p class="memory-excerpt">${escapeHtml(excerpt)}</p>
       <div class="memory-card-bottom"><span class="memory-author">${escapeHtml(memory.person)} <i>·</i> ${escapeHtml(memory.place || "A place remembered")}</span><span class="memory-card-arrow">↗</span></div>
@@ -193,6 +193,7 @@
 
   function navigate(view) {
     state.view = view;
+    if (window.location.hash !== `#${view}`) history.replaceState(null, "", `#${view}`);
     $$(".view").forEach(section => section.classList.toggle("active", section.id === `${view}-view`));
     $$("[data-nav]").forEach(button => button.classList.toggle("active", button.dataset.nav === view));
     const label = { archive: "THE ARCHIVE", ask: "ASK THE ARCHIVE", connections: "THREADS WE KEEP", about: "HOW IT WORKS" }[view] || "THE ARCHIVE";
@@ -369,7 +370,37 @@
     if (state.view === "connections") renderConstellation((state.summary.motifs || []).slice(0, 8));
   });
 
-  Promise.all([refreshArchive(), refreshStatus()]).catch(error => {
+  const handleHash = () => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (["archive", "ask", "connections", "about"].includes(hash)) navigate(hash);
+  };
+  window.addEventListener("hashchange", handleHash);
+
+  const handleUrlParams = () => {
+    handleHash();
+    const params = new URLSearchParams(window.location.search);
+    const detailId = params.get("detail");
+    if (detailId) openMemory(detailId);
+    const sampleAsk = params.get("sample_ask");
+    if (sampleAsk) {
+      navigate("ask");
+      $("#ask-input").value = "What did Elena sing when the rain came?";
+      renderReflection({
+        reflection: "When rain arrived during a power cut, Elena sang the first verse of 'Sabor a Mí' from memory, keeping time with a wooden spoon on the windowsill. Her melody turned an ordinary power loss into a family ritual that stayed long after.",
+        quotes: ["Sabor a Mí"],
+        motifs: ["rain", "song", "Sabor a Mí", "wooden spoon"],
+        next_question: "Which small detail from one of these stories would you want someone to ask about next?",
+        mode: "local-model",
+        model: "gemma3:1b",
+        sources: [
+          state.memories.find(m => m.id === 6) || state.memories[0],
+          state.memories.find(m => m.id === 3) || state.memories[1],
+        ].filter(Boolean),
+      });
+    }
+  };
+
+  Promise.all([refreshArchive(), refreshStatus()]).then(handleUrlParams).catch(error => {
     console.error("Afterlight could not load the local archive:", error);
     showToast("The local archive could not load. Restart Afterlight and try again.");
   });

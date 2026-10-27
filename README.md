@@ -31,7 +31,7 @@
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
 - [Quick Start](#-quick-start)
-- [Walkthrough & Demo Archive](#-walkthrough--demo-archive)
+- [Interface Tour & Walkthrough](#-interface-tour--walkthrough)
 - [Configuration & Data Paths](#-configuration--data-paths)
 - [Local API Reference](#-local-api-reference)
 - [Security & Ethical Guardrails](#-security--ethical-guardrails)
@@ -75,21 +75,22 @@ Afterlight is engineered around privacy-by-construction:
 
 ```mermaid
 flowchart TD
-    User([User in Browser]) <-->|HTTP 127.0.0.1:8765| Handler[Afterlight Local Server<br><i>Python Standard Library</i>]
-    
-    subgraph Local Storage
-        Handler <-->|Read / Write| SQLite[(SQLite Database<br><i>%LOCALAPPDATA% / ~/.local/share</i>)]
+    User["User in Browser"] -->|"HTTP 127.0.0.1:8765"| Handler["Afterlight Local Server (Python Standard Library)"]
+    Handler -->|"Renders Interface"| User
+
+    subgraph Storage ["Local Storage"]
+        Handler -->|"Read / Write"| DB[("SQLite Database (AppData)")]
     end
-    
-    subgraph Retrieval & Synthesis
-        Handler -->|Tokenized Search| Ranker[Keyword & Tag Ranker]
-        Ranker -->|Top Source Cards| Guard[Ollama Chat Dispatcher]
-        Guard <-->|HTTP Loopback :11434| Ollama[Local Ollama Engine<br><i>Gemma 3 1B</i>]
-        Guard -->|Extracted JSON| Verifier[Verbatim Quote Verifier]
-        Verifier -->|Drops Hallucinated Quotes| Renderer[Evidence-Led Reflection]
+
+    subgraph Engine ["Retrieval and Synthesis Engine"]
+        Handler -->|"Tokenized Search"| Ranker["Keyword and Tag Ranker"]
+        Ranker -->|"Top Source Excerpts"| Dispatcher["Ollama Chat Dispatcher"]
+        Dispatcher -->|"Loopback :11434"| Ollama["Local Ollama Engine (Gemma 3 1B)"]
+        Dispatcher -->|"Structured JSON"| Verifier["Verbatim Quote Verifier"]
+        Verifier -->|"Filters Hallucinations"| Reflection["Evidence-Led Reflection"]
     end
-    
-    Renderer --> User
+
+    Reflection -->|"Reflection and Sources"| Handler
 ```
 
 ---
@@ -135,18 +136,50 @@ http://127.0.0.1:8765
 
 ---
 
-## 🧭 Walkthrough & Demo Archive
+## 📸 Interface Tour & Walkthrough
 
-Afterlight comes with a preloaded fictional archive of the **Morales family** so you can immediately experience the workflow:
+### 1. The Quiet Archive (`/`)
+The main archive displays saved family stories, featured memories, and search with instant filtering. The status pill at the top verifies that inference runs locally on this device via loopback.
 
-1. **Follow a Story:** Open **"The glass of water"** to read Abuela Rosa's quote: *"We leave a little of everything we love."*
-2. **Ask the Archive:**
-   - Navigate to **Ask the archive**.
-   - Select the prompt chip: *"What did Elena sing when the rain came?"*
-   - Watch Afterlight retrieve the matching music room memory, dispatch the excerpt to Gemma on your machine, and display the source card next to the reflection.
-3. **Verify the Guardrail:** Check the verified quote tag. Only verbatim text from the original story is permitted. Paraphrased or hallucinated lines are dropped.
-4. **Explore the Atlas:** Switch to **Threads we keep** to see how details like `rain`, `radio`, and `marigolds` weave between different family members.
-5. **Keep a Memory & Export:** Click **Keep a memory** to record a new story, then download your entire archive via **Export**.
+<p align="center">
+  <img src="docs/screenshots/archive.png" alt="Afterlight Archive View" width="100%" />
+</p>
+
+---
+
+### 2. Evidence-Led Reflection (`#ask`)
+Ask a question about a sound, recipe, or gesture. Afterlight retrieves matching original notes, invokes Gemma 3 through loopback Ollama, displays the reflection, drops any unverified quotes, and cites source memories directly.
+
+<p align="center">
+  <img src="docs/screenshots/ask_reflection.png" alt="Ask the Archive with Gemma 3 Reflection" width="100%" />
+</p>
+
+---
+
+### 3. Preserving the Original Voice
+Every reflection stems from human notes. Clicking any memory opens the preserved family story, its exact date, place, and tags.
+
+<p align="center">
+  <img src="docs/screenshots/memory_detail.png" alt="Memory Detail Card" width="90%" />
+</p>
+
+---
+
+### 4. The Memory Atlas (`#connections`)
+Recurring objects, songs, and sayings gather into an interactive constellation map, tracing motifs across family members without AI speculation.
+
+<p align="center">
+  <img src="docs/screenshots/connections.png" alt="Threads We Keep - Memory Atlas Constellation" width="100%" />
+</p>
+
+---
+
+### 5. Ethical Principles & Privacy (`#about`)
+Afterlight keeps the AI in its place: local-only execution, transparent architecture, and the freedom to export or remove models at will.
+
+<p align="center">
+  <img src="docs/screenshots/how_it_works.png" alt="How Afterlight Works" width="100%" />
+</p>
 
 ---
 
